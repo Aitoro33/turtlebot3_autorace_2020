@@ -44,7 +44,7 @@ class DetectLane():
         self.lightness_yellow_l = rospy.get_param("~detect/lane/yellow/lightness_l", 95)
         self.lightness_yellow_h = rospy.get_param("~detect/lane/yellow/lightness_h", 255)
 
-        self.is_calibration_mode = rospy.get_param("~/is_detection_calibration_mode", False)
+        self.is_calibration_mode = rospy.get_param("~/tb3_0/is_detection_calibration_mode", False)
         if self.is_calibration_mode == True:
             srv_detect_lane = Server(DetectLaneParamsConfig, self.cbGetDetectLaneParam)
 
@@ -53,35 +53,35 @@ class DetectLane():
 
         if self.sub_image_type == "compressed":
             # subscribes compressed image
-            self.sub_image_original = rospy.Subscriber('/detect/tb3_1/image_input/compressed', CompressedImage, self.cbFindLane, queue_size = 1)
+            self.sub_image_original = rospy.Subscriber('/detect/tb3_0/image_input/compressed', CompressedImage, self.cbFindLane, queue_size = 1)
         elif self.sub_image_type == "raw":
             # subscribes raw image
-            self.sub_image_original = rospy.Subscriber('/detect/tb3_1/image_input', Image, self.cbFindLane, queue_size = 1)
+            self.sub_image_original = rospy.Subscriber('/detect/tb3_0/image_input', Image, self.cbFindLane, queue_size = 1)
 
         if self.pub_image_type == "compressed":
             # publishes lane image in compressed type 
-            self.pub_image_lane = rospy.Publisher('/detect/tb3_1/image_output/compressed', CompressedImage, queue_size = 1)
+            self.pub_image_lane = rospy.Publisher('/detect/tb3_0/image_output/compressed', CompressedImage, queue_size = 1)
         elif self.pub_image_type == "raw":
             # publishes lane image in raw type
-            self.pub_image_lane = rospy.Publisher('/detect/tb3_1/image_output', Image, queue_size = 1)
+            self.pub_image_lane = rospy.Publisher('/detect/tb3_0/image_output', Image, queue_size = 1)
 
         if self.is_calibration_mode == True:
             if self.pub_image_type == "compressed":
                 # publishes lane image in compressed type 
-                self.pub_image_white_lane = rospy.Publisher('/detect/tb3_1/image_output_sub1/compressed', CompressedImage, queue_size = 1)
-                self.pub_image_yellow_lane = rospy.Publisher('/detect/tb3_1/image_output_sub2/compressed', CompressedImage, queue_size = 1)
+                self.pub_image_white_lane = rospy.Publisher('/detect/tb3_0/image_output_sub1/compressed', CompressedImage, queue_size = 1)
+                self.pub_image_yellow_lane = rospy.Publisher('/detect/tb3_0/image_output_sub2/compressed', CompressedImage, queue_size = 1)
             elif self.pub_image_type == "raw":
                 # publishes lane image in raw type
-                self.pub_image_white_lane = rospy.Publisher('/detect/tb3_1/image_output_sub1', Image, queue_size = 1)
-                self.pub_image_yellow_lane = rospy.Publisher('/detect/tb3_1/image_output_sub2', Image, queue_size = 1)
+                self.pub_image_white_lane = rospy.Publisher('/detect/tb3_0/image_output_sub1', Image, queue_size = 1)
+                self.pub_image_yellow_lane = rospy.Publisher('/detect/tb3_0/image_output_sub2', Image, queue_size = 1)
 
-        self.pub_lane = rospy.Publisher('/detect/tb3_1/lane', Float64, queue_size = 1)
+        self.pub_lane = rospy.Publisher('/detect/tb3_0/lane', Float64, queue_size = 1)
 
         # subscribes state : yellow line reliability
-        self.pub_yellow_line_reliability = rospy.Publisher('/detect/tb3_1/yellow_line_reliability', UInt8, queue_size=1)
+        self.pub_yellow_line_reliability = rospy.Publisher('/detect/tb3_0/yellow_line_reliability', UInt8, queue_size=1)
  
         # subscribes state : white line reliability
-        self.pub_white_line_reliability = rospy.Publisher('/detect/tb3_1/white_line_reliability', UInt8, queue_size=1)
+        self.pub_white_line_reliability = rospy.Publisher('/detect/tb3_0/white_line_reliability', UInt8, queue_size=1)
  
         self.cvBridge = CvBridge()
 
@@ -486,6 +486,6 @@ class DetectLane():
         rospy.spin()
 
 if __name__ == '__main__':
-    rospy.init_node('detect_lane')
+    rospy.init_node('detect_lane_0')
     node = DetectLane()
     node.main()

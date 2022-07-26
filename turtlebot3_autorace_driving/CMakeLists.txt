@@ -38,7 +38,9 @@ catkin_package(
 ################################################################################
 catkin_install_python(PROGRAMS
   nodes/control_lane
+  nodes/control_lane_0
   nodes/control_moving
+  nodes/control_moving_0
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

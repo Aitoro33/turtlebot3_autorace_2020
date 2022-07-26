@@ -32,12 +32,12 @@ class CoreNodeController():
         self.ros_package_path = self.ros_package_path.replace('turtlebot3_autorace_core/nodes', '')
 
         # subscribes : status returned
-        self.sub_construction_stamped = rospy.Subscriber('/detect/construction_stamped', UInt8, self.cbconstructionStamped, queue_size=1)
-        self.sub_mode_control = rospy.Subscriber('/core/decided_mode', UInt8, self.cbReceiveMode, queue_size=1)
+        self.sub_construction_stamped = rospy.Subscriber('/detect/tb3_1/construction_stamped', UInt8, self.cbconstructionStamped, queue_size=1)
+        self.sub_mode_control = rospy.Subscriber('/core/tb3_1/decided_mode', UInt8, self.cbReceiveMode, queue_size=1)
 
         # publishes orders
-        self.pub_construction_order = rospy.Publisher('/detect/construction_order', UInt8, queue_size=1)
-        self.pub_mode_return = rospy.Publisher('/core/returned_mode', UInt8, queue_size=1)
+        self.pub_construction_order = rospy.Publisher('/detect/tb3_1/construction_order', UInt8, queue_size=1)
+        self.pub_mode_return = rospy.Publisher('/core/tb3_1/returned_mode', UInt8, queue_size=1)
 
         self.CurrentMode = Enum('CurrentMode', 'idle lane_following construction')
         self.current_mode = self.CurrentMode.idle.value
@@ -146,7 +146,6 @@ class CoreNodeController():
                 self.fnLaunch(self.Launcher.launch_control_lane.value, True)
                 self.fnLaunch(self.Launcher.launch_control_moving.value, False) 
                 
-            rospy.sleep(2)
             self.pub_construction_order.publish(msg_pub_construction_order)
 
     def fnLaunch(self, launch_num, is_start):
@@ -154,7 +153,7 @@ class CoreNodeController():
             if is_start == True:
                 if self.launch_camera_launched == False:
                     self.launch_camera = roslaunch.scriptapi.ROSLaunch()
-                    self.launch_camera = roslaunch.parent.ROSLaunchParent(self.uuid, [self.ros_package_path + "turtlebot3_autorace_camera/launch/extrinsic_camera_calibration.launch"])
+                    self.launch_camera = roslaunch.parent.ROSLaunchParent(self.uuid, [self.ros_package_path + "turtlebot3_autorace_camera/launch/extrinsic_camera_calibration_1.launch"])
                     self.launch_camera_launched = True
                     self.launch_camera.start()
                 else:

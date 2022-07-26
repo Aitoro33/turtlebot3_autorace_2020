@@ -2,8 +2,8 @@
   <group>
     <!-- image transport from compressed to raw -->
     <node pkg="image_transport" type="republish" name="republish" args="compressed">
-      <remap from="in"  to="camera/rgb/image_raw" />
-      <remap from="out"   to="camera/image"/>
+      <remap from="out"  to="/camera/rgb/image_raw" />
+      <remap from="in"   to="/camera/image"/>
     </node>
     <node pkg="topic_tools" type="relay" name="relay_camera_info" args="/camera/rgb/camera_info /camera/camera_info"/>
   </group>

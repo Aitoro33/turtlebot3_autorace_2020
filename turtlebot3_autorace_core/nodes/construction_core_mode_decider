@@ -27,11 +27,11 @@ from std_msgs.msg import UInt8
 class CoreModeDecider():
     def __init__(self):
         # subscribes : invoking object detected
-        self.sub_traffic_sign = rospy.Subscriber('/detect/traffic_sign', UInt8, self.cbInvokedByTrafficSign, queue_size=1)
-        self.sub_returned_mode = rospy.Subscriber('/core/returned_mode', UInt8, self.cbReturnedMode, queue_size=1)
+        self.sub_traffic_sign = rospy.Subscriber('/detect/tb3_1/traffic_sign', UInt8, self.cbInvokedByTrafficSign, queue_size=1)
+        self.sub_returned_mode = rospy.Subscriber('/core/tb3_1/returned_mode', UInt8, self.cbReturnedMode, queue_size=1)
 
         # publishes : decided mode
-        self.pub_decided_mode = rospy.Publisher('/core/decided_mode', UInt8, queue_size=1)
+        self.pub_decided_mode = rospy.Publisher('/core/tb3_1/decided_mode', UInt8, queue_size=1)
 
         self.InvokedObject = Enum('InvokedObject', 'traffic_sign')
         self.TrafficSign = Enum('TrafficSign', 'construction')

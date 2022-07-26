@@ -38,20 +38,20 @@ class DetectSign():
         #subscribes
         if self.sub_image_type == "compressed":
             # subscribes compressed image
-            self.sub_image_original = rospy.Subscriber('/detect/image_input/compressed', CompressedImage, self.cbFindTrafficSign, queue_size = 1)
+            self.sub_image_original = rospy.Subscriber('/detect/tb3_1/image_input/compressed', CompressedImage, self.cbFindTrafficSign, queue_size = 1)
         elif self.sub_image_type == "raw":
             # subscribes raw image
-            self.sub_image_original = rospy.Subscriber('/detect/image_input', Image, self.cbFindTrafficSign, queue_size = 1)
+            self.sub_image_original = rospy.Subscriber('/detect/tb3_1/image_input', Image, self.cbFindTrafficSign, queue_size = 1)
 
         # publishes
-        self.pub_traffic_sign = rospy.Publisher('/detect/traffic_sign', UInt8, queue_size=1)
+        self.pub_traffic_sign = rospy.Publisher('/detect/tb3_1/traffic_sign', UInt8, queue_size=1)
         
         if self.pub_image_type == "compressed":
             # publishes traffic sign image in compressed type 
-            self.pub_image_traffic_sign = rospy.Publisher('/detect/image_output/compressed', CompressedImage, queue_size = 1)
+            self.pub_image_traffic_sign = rospy.Publisher('/detect/tb3_1/image_output/compressed', CompressedImage, queue_size = 1)
         elif self.pub_image_type == "raw":
             # publishes traffic sign image in raw type
-            self.pub_image_traffic_sign = rospy.Publisher('/detect/image_output', Image, queue_size = 1)
+            self.pub_image_traffic_sign = rospy.Publisher('/detect/tb3_1/image_output', Image, queue_size = 1)
 
         self.cvBridge = CvBridge()
         self.TrafficSign = Enum('TrafficSign', 'construction')

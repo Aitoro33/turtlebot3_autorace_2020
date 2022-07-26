@@ -32,12 +32,12 @@ from turtlebot3_autorace_msgs.msg import MovingParam
 
 class ControlMoving():
     def __init__(self):
-        self.sub_moving_state = rospy.Subscriber('/control/tb3_1/moving/state', MovingParam, self.get_param, queue_size = 1)
-        self.sub_odom = rospy.Subscriber('/tb3_1/odom', Odometry, self.cbOdom, queue_size=1)
+        self.sub_moving_state = rospy.Subscriber('/control/tb3_0/moving/state', MovingParam, self.get_param, queue_size = 1)
+        self.sub_odom = rospy.Subscriber('/tb3_0/odom', Odometry, self.cbOdom, queue_size=1)
 
-        self.pub_cmd_vel = rospy.Publisher('/tb3_1/cmd_vel', Twist, queue_size = 1)
-        self.pub_max_vel = rospy.Publisher('/control/tb3_1/max_vel', Float64, queue_size = 1)
-        self.pub_moving_complete = rospy.Publisher('/control/tb3_1/moving/complete', UInt8, queue_size = 1)
+        self.pub_cmd_vel = rospy.Publisher('/tb3_0/cmd_vel', Twist, queue_size = 1)
+        self.pub_max_vel = rospy.Publisher('/control/tb3_0/max_vel', Float64, queue_size = 1)
+        self.pub_moving_complete = rospy.Publisher('/control/tb3_0/moving/complete', UInt8, queue_size = 1)
 
         #moving type enum
         self.TypeOfMoving = Enum('TypeOfMoving', 'idle left right forward backward')
@@ -68,10 +68,10 @@ class ControlMoving():
         self.test = math.radians(90)
      
         msg_pub_max_vel = Float64()
-        msg_pub_max_vel.data = 0.3
+        msg_pub_max_vel.data = 0.09
         self.pub_max_vel.publish(msg_pub_max_vel)
 
-        loop_rate = rospy.Rate(10) # 10hz
+        loop_rate = rospy.Rate(100) # 10hz
         while not rospy.is_shutdown():
             if self.is_step_left == True:
                 self.turn_left(self.moving_msg)
@@ -315,7 +315,7 @@ class ControlMoving():
         return theta
 
     def fnShutDown(self):
-        rospy.loginfo("Shutting down. cmd_vel will be 0")
+        rospy.loginfo("Shutting down. tb3_0/cmd_vel will be 0")
 
         twist = Twist()
         twist.linear.x = 0
@@ -330,6 +330,6 @@ class ControlMoving():
         rospy.spin()
 
 if __name__ == '__main__':
-    rospy.init_node('control_moving')
+    rospy.init_node('control_moving_0')
     node = ControlMoving()
     node.main()

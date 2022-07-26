@@ -29,7 +29,7 @@ from turtlebot3_autorace_camera.cfg import ImageCompensationParamsConfig
 
 class ImageCompensation():
     def __init__(self):
-        self.clip_hist_percent = rospy.get_param("~camera/extrinsic_camera_calibration/clip_hist_percent", 1.)
+        self.clip_hist_percent = rospy.get_param("~/tb3_1/camera/extrinsic_camera_calibration/clip_hist_percent", 1.)
 
         self.is_calibration_mode = rospy.get_param("~is_extrinsic_camera_calibration_mode", False)
         if self.is_calibration_mode == True:
@@ -42,17 +42,17 @@ class ImageCompensation():
 
         if self.sub_image_type == "compressed":
             # subscribes compressed image 
-            self.sub_image_original = rospy.Subscriber('/camera/image_input/compressed', CompressedImage, self.cbImageCompensation, queue_size = 1)
+            self.sub_image_original = rospy.Subscriber('/tb3_1/camera/image_input/compressed', CompressedImage, self.cbImageCompensation, queue_size = 1)
         elif self.sub_image_type == "raw":
             # subscribes raw image 
-            self.sub_image_original = rospy.Subscriber('/camera/image_input', Image, self.cbImageCompensation, queue_size = 1)
+            self.sub_image_original = rospy.Subscriber('/tb3_1/camera/image_input', Image, self.cbImageCompensation, queue_size = 1)
 
         if self.pub_image_type == "compressed":
             # publishes compensated image in compressed type 
-            self.pub_image_compensated = rospy.Publisher('/camera/image_output/compressed', CompressedImage, queue_size = 1)
+            self.pub_image_compensated = rospy.Publisher('/tb3_1/camera/image_output/compressed', CompressedImage, queue_size = 1)
         elif self.pub_image_type == "raw":
             # publishes compensated image in raw type
-            self.pub_image_compensated = rospy.Publisher('/camera/image_output', Image, queue_size = 1)
+            self.pub_image_compensated = rospy.Publisher('/tb3_1/camera/image_output', Image, queue_size = 1)
 
         self.cvBridge = CvBridge()
 
@@ -126,6 +126,6 @@ class ImageCompensation():
         rospy.spin()
 
 if __name__ == '__main__':
-    rospy.init_node('image_compensation')
+    rospy.init_node('image_compensation_1')
     node = ImageCompensation()
     node.main()
